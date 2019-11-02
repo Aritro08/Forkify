@@ -1,8 +1,10 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import List from './models/List';
 import {elements, renderLoader, removeLoader} from './views/base';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as listView from './views/listView';
 
 const state = {};
 
@@ -77,6 +79,32 @@ const controlRecipe = async () => {
 
 };
 
+const controlList = () => {
+    if(!state.list)
+    {
+        state.list = new List();
+    }
+    state.recipe.ingredients.forEach(element => {
+        const item = state.list.addItem(element.count, element.unit, element.ingredient);
+        listView.renderItem(item);
+        // console.log(item);
+    });
+}
+
+elements.shoppingList.addEventListener('click', element => {
+    // console.log(state.list);
+    const id = element.target.closest('.shopping__item').dataset.itemid;
+
+    if(element.target.matches('.shopping__delete, .shopping__delete *')){
+        
+        state.list.deleteItem(id);
+        listView.deleteItem(id);
+    } else if(element.target.matches(".shopping__count-value")){
+            const val = parseFloat(element.target.value);
+            state.list.updateList(id, val);
+    }
+});
+
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
 elements.recipe.addEventListener('click', element => {
@@ -90,6 +118,8 @@ elements.recipe.addEventListener('click', element => {
     } else if(element.target.matches('.btn-increase, .btn-increase *')) {
         state.recipe.updateServings('inc');
         recipeView.updateServingsIng(state.recipe);
+    } else if(element.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+        controlList();
     }
 
 });
