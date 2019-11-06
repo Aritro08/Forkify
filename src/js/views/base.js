@@ -5,7 +5,9 @@ export const elements = {
     searchDiv: document.querySelector('.results'),
     searchPageBtn: document.querySelector('.results__pages'),
     recipe: document.querySelector('.recipe'),
-    shoppingList: document.querySelector('.shopping__list')
+    shoppingList: document.querySelector('.shopping__list'),
+    likedMenu: document.querySelector('.likes__field'),
+    likedList: document.querySelector('.likes__list')
 }
 
 export const renderLoader = parent => {
