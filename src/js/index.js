@@ -57,7 +57,6 @@ const controlRecipe = async () => {
 
             removeLoader();
             recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
-            console.log(state.recipe);
         }
         catch(error)
         {
@@ -92,7 +91,6 @@ const controlLikes = () => {
         const newLike = state.likes.addLike(currentID, state.recipe.title, state.recipe.author, state.recipe.img);
         likesView.toggleLikeBtn(true);
         likesView.renderLikes(newLike);
-        console.log(state.likes);
     } else {
         state.likes.deleteLike(currentID);
         likesView.toggleLikeBtn(false);
